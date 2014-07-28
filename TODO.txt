@@ -1,0 +1,5 @@
+* add hover info box that details the keyboard shortcuts for the TrackballControls
+* add reset controls button (i.e. reset camera position - 'MishMesh.master.controls.reset()')
+* wrap wireframe checkbox with label etc.
+* replace standard wireframe with threex solidwireframe [https://github.com/jeromeetienne/threex.solidwireframe]
+* fix set model color 

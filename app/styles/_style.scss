@@ -1,0 +1,50 @@
+html,
+body/*,
+.container*/{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+
+body{
+	overflow: hidden;
+
+	background: #87e0fd; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #87e0fd 0%, #53cbf1 40%, #05abe0 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#87e0fd), color-stop(40%,#53cbf1), color-stop(100%,#05abe0)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* Chrome10+,Safari5.1+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* W3C */
+}
+
+.blurred,
+.controls{
+	position: absolute;
+	top: 2rem;
+	left: 2rem;
+	border-radius:0.5rem;
+}
+
+canvas{
+	z-index: 5;
+}
+
+.blurred{
+	min-height: 12rem;
+	min-width: 29rem;
+
+	z-index: 8;
+	-webkit-filter: blur(1rem);
+	-moz-filter: blur(1rem);
+	filter: blur(1rem);
+}
+
+.controls{
+	padding: 1rem;
+	background-color: rgba(255,255,255,0.7);
+	z-index: 10;
+	
+	label{
+		direction: rtl;
+	}
+}
