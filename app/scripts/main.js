@@ -30,12 +30,12 @@ MishMesh.init = function () {
 	MishMesh.master.scene = new THREE.Scene();	   	
 
  	// Create a light, set its position, and add it to the scene.
-    var light = new THREE.PointLight(0xffffff);
-    light.position.set(-100,200,100);
-    MishMesh.master.scene.add(light);
+ 	var light = new THREE.PointLight(0xffffff);
+ 	light.position.set(-100,200,100);
+ 	MishMesh.master.scene.add(light);
 
-	var ambientLight = new THREE.AmbientLight(0x101010, 1.0);
-  	MishMesh.master.scene.add(ambientLight);
+ 	var ambientLight = new THREE.AmbientLight(0x101010, 1.0);
+ 	MishMesh.master.scene.add(ambientLight);
 
     //detect webGL support
     var webgl = ( function () { 
@@ -47,8 +47,8 @@ MishMesh.init = function () {
     })();
 
     MishMesh.master.renderer = webgl ? 
-							    new THREE.WebGLRenderer({antialias:true, alpha: true}) : 
-							    new THREE.CanvasRenderer({alpha: true});
+    new THREE.WebGLRenderer({antialias:true, alpha: true}) : 
+    new THREE.CanvasRenderer({alpha: true});
     MishMesh.master.renderer.setClearColor(0x000000, 0);
     MishMesh.master.renderer.setSize(MishMesh.master.container.clientWidth, MishMesh.master.container.clientHeight);
 
@@ -65,6 +65,19 @@ MishMesh.render = function () {
 	*/
 
 	MishMesh.master.renderer.render(MishMesh.master.scene, MishMesh.master.camera);
+};
+
+MishMesh.playAnimation = function () {
+	var materials = MishMesh.master.material,
+		animation;
+
+	for (var k in materials) {
+		materials[k].skinning = true;
+	}
+
+	THREE.AnimationHandler.add(MishMesh.master.geometry.animation);
+	animation = new THREE.Animation(MishMesh.master.mesh, "Action", THREE.AnimationHandler.CATMULLROM);
+	animation.play(false, 0);
 };
 
 MishMesh.animate = function () {
@@ -87,17 +100,20 @@ MishMesh.handleFiles = function(files) {
 		
 		MishMesh.loadModel();
 
-        MishMesh.animate();
-    });
+		MishMesh.animate();
+	});
 
     //need to explicitly clear objectURL from memory
-	window.URL.revokeObjectURL(objectURL);
+    window.URL.revokeObjectURL(objectURL);
 };
 
 MishMesh.loadModel = function () {
 	//var object3d = new THREE.Object3D();
-	if(MishMesh.master.scene.children.length){
-		for (var i = 0; i < MishMesh.master.scene.children.length; i++) {
+
+	//clear scene of previous setup
+	var len = MishMesh.master.scene.children.length;
+	if(len){
+		for (var i = len - 1; i >= 0; i--) {
 			MishMesh.master.scene.remove(MishMesh.master.scene.children[i]);
 		};
 	}
@@ -108,6 +124,9 @@ MishMesh.loadModel = function () {
 		MishMesh.master.geometry, 
 		new THREE.MeshFaceMaterial(MishMesh.master.material)
 		);
+
+	MishMesh.master.controls.reset();
+	
 	//object3d.add(MishMesh.master.mesh);
 	MishMesh.master.scene.add(MishMesh.master.mesh);	
 };
